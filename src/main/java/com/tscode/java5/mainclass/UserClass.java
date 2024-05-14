@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class user {
+@Table(name = "user")
+public class UserClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,7 +18,7 @@ public class user {
     @Column(name = "account")
     private String account;
 
-    @Column(name ="Name")
+    @Column(name = "Name")
     private String name;
 
     @Column(name = "password")
