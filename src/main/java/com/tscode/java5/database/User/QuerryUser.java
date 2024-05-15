@@ -59,6 +59,7 @@ public class QuerryUser implements khaibaohamUser {
         return storyHubsotry.getById(Id);
     }
 
+    @Override
     public UserClass findByAccount(String account) {
         return storyHubsotry.findByAccount(account);
     }

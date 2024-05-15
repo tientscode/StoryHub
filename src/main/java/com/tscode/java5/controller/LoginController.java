@@ -15,7 +15,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
-@SessionAttributes("username")
+//@SessionAttributes("username")
 public class LoginController {
 
     @GetMapping("/login")
