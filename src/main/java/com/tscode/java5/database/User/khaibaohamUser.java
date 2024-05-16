@@ -10,7 +10,7 @@ public interface khaibaohamUser {
 
 
     // them nguoi dung
-    public UserClass adduser(UserClassDto userClassDto);
+    public UserClass adduser(SignUpDto SignUpDto);
 
 
     //cap nhat nguoi dung

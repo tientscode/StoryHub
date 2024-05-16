@@ -1,12 +1,15 @@
 package com.tscode.java5.database.User;
 
 
+import com.tscode.java5.database.role.RoleRepository;
+import com.tscode.java5.mainclass.RoleClass;
 import com.tscode.java5.mainclass.SignUpDto;
 import com.tscode.java5.mainclass.UserClass;
 import com.tscode.java5.mainclass.UserClassDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -15,17 +18,22 @@ public class QuerryUser implements khaibaohamUser {
     @Autowired
     private UserRepository storyHubsotry;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Override
-    public UserClass adduser(UserClassDto userClassDto) {
-        if (storyHubsotry.existsByaccount(userClassDto.getAccount())) {
+    public UserClass adduser(SignUpDto signUpDto) {
+        if (storyHubsotry.existsByaccount(signUpDto.getAccount())) {
             throw new RuntimeException("accoutn already exists");
         }
         UserClass userclass = new UserClass();
-        userclass.setAccount(userClassDto.getAccount());
-        userclass.setPassword(userClassDto.getPassword());
-        userclass.setName(userClassDto.getName());
+        userclass.setAccount(signUpDto.getAccount());
+        userclass.setPassword(signUpDto.getPassword());
+        userclass.setName(signUpDto.getName());
         userclass.setActive(true);
 
+        RoleClass defaultRole = roleRepository.findByName("Role_User");
+        userclass.setRoles(Collections.singleton(defaultRole));
         return storyHubsotry.save(userclass);
     }
 
