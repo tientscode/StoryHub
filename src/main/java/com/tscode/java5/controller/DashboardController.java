@@ -2,6 +2,7 @@ package com.tscode.java5.controller;
 
 import com.tscode.java5.database.User.khaibaohamUser;
 import com.tscode.java5.mainclass.UserClass;
+import com.tscode.java5.mainclass.UserClassDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,8 @@ public class DashboardController {
 
     // api them nguoi dung
     @PostMapping("/admin/add")
-    public UserClass addClassUser(@RequestBody UserClass UserClass) {
-        return khaibaohamUser.addClassUser(UserClass);
+    public UserClass addClassUser(@RequestBody UserClassDto userClassDto) {
+        return khaibaohamUser.adduser(userClassDto);
     }
 
 
@@ -33,9 +34,18 @@ public class DashboardController {
         return khaibaohamUser.deletteClassUser(Id);
     }
 
-    //api lay danh sach nguoi dung
+//    api lay danh sach nguoi dung
     @GetMapping("/admin/list")
     public List<UserClass> getAlClassUserList() {
         return khaibaohamUser.getClassUsers();
     }
+
+
+
+    @GetMapping("/admin/list/user/{Id}")
+    public UserClassDto getClassUser(@PathVariable("Id") Integer Id) {
+        return khaibaohamUser.getoneClassUser(Id);
+    }
+
+
 }

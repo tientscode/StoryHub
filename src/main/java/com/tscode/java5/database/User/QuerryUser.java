@@ -1,7 +1,9 @@
 package com.tscode.java5.database.User;
 
 
+import com.tscode.java5.mainclass.SignUpDto;
 import com.tscode.java5.mainclass.UserClass;
+import com.tscode.java5.mainclass.UserClassDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +16,31 @@ public class QuerryUser implements khaibaohamUser {
     private UserRepository storyHubsotry;
 
     @Override
-    public UserClass addClassUser(UserClass UserClass) {
-        if(UserClass !=null){
-            return storyHubsotry.save(UserClass);
+    public UserClass adduser(UserClassDto userClassDto) {
+        if (storyHubsotry.existsByaccount(userClassDto.getAccount())) {
+            throw new RuntimeException("accoutn already exists");
         }
-        return null;
+        UserClass userclass = new UserClass();
+        userclass.setAccount(userClassDto.getAccount());
+        userclass.setPassword(userClassDto.getPassword());
+        userclass.setName(userClassDto.getName());
+        userclass.setActive(true);
+
+        return storyHubsotry.save(userclass);
     }
+
+
 
     @Override
     public UserClass upClassUser(Integer Id, UserClass UserClass) {
-        if(UserClass !=null){
+        if (UserClass != null) {
             UserClass userClass1 = storyHubsotry.getById(Id);
-            if(userClass1 !=null){
+            if (userClass1 != null) {
                 userClass1.setAccount(UserClass.getAccount());
                 userClass1.setPassword(UserClass.getPassword());
                 userClass1.setName(UserClass.getName());
+                userClass1.setActive(UserClass.getActive());
+                UserClass.setRoles(UserClass.getRoles());
                 return storyHubsotry.save(userClass1);
             }
         }
@@ -37,9 +49,9 @@ public class QuerryUser implements khaibaohamUser {
 
     @Override
     public boolean deletteClassUser(Integer Id) {
-        if(Id>=0){
+        if (Id >= 0) {
             UserClass UserClass = storyHubsotry.getById(Id);
-            if(UserClass !=null){
+            if (UserClass != null) {
                 storyHubsotry.delete(UserClass);
                 return true;
             }
@@ -55,8 +67,14 @@ public class QuerryUser implements khaibaohamUser {
     }
 
     @Override
-    public UserClass getoneClassUser(Integer Id) {
-        return storyHubsotry.getById(Id);
+    public UserClassDto getoneClassUser(Integer Id) {
+        if (Id != null) {
+            UserClass userClass1 = storyHubsotry.getById(Id);
+            if (userClass1 != null) {
+                return new UserClassDto(userClass1.getName(), userClass1.getAccount(), userClass1.getPassword());
+            }
+        }
+        return null;
     }
 
     @Override
